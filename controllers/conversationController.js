@@ -2,6 +2,7 @@ const Conversation = require("../models/Conversation");
 const User = require("../models/User");
 const AppError = require("../utils/appError");
 const catchErrorAsync = require("../utils/catchErrorAsync");
+const LessonRequest = require('../models/LessonRequest');
 
 exports.getConversations = catchErrorAsync(async (req, res, next) => {
     const user = await User.findById(req.user.id);
@@ -12,19 +13,29 @@ exports.getConversations = catchErrorAsync(async (req, res, next) => {
     const { id } = req.query;
     const query = {};
 
-    if (id.length > 0) {
+    if (id && id.length > 0) {
         query.idSearch = id;
     }
+
+    const lessonRequests = await LessonRequest.find({
+        $or: [
+            { student: user._id },
+            { teacher: user._id }
+        ]
+    }).select('_id');
+
+    const lessonRequestIds = lessonRequests.map(lr => lr._id);
+
+    if (lessonRequestIds.length === 0) {
+        return res.status(200).json([]);
+    }
+
+    query.lessonRequest = { $in: lessonRequestIds };
 
     const conversations = await Conversation.find(query)
         .populate({
             path: 'lessonRequest',
-            match: {
-                $or: [
-                    { student: user },
-                    { teacher: user },
-                ]
-            }
+            select: 'student teacher'
         })
         .sort({ timestamps: -1 })
         .skip(skip)
