@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
     {
         email: {
             type: String,
-            required: [true, 'Email is required'],
+            required: [true, 'validation.emailRequired'],
             unique: true,
             trim: true,
             validate: {
@@ -20,12 +20,12 @@ const userSchema = new mongoose.Schema(
                     }
                     return true;
                 },
-                message: 'Email is incorrect',
+                message: 'validation.emailIncorrect',
             }
         },
         password: {
             type: String,
-            required: [true, 'Password is required'],
+            required: [true, 'validation.passwordRequired'],
             trim: true,
             minLenght: 6,
             select: false,
@@ -36,17 +36,17 @@ const userSchema = new mongoose.Schema(
                 validator: function (val) {
                     return this.password === val;
                 },
-                message: 'Passwords are not the same',
+                message: 'validation.passwordsNotSame',
             }
         },
         name: {
             type: String,
-            required: [true, 'Name is required'],
+            required: [true, 'validation.nameRequired'],
             trim: true,
         },
         surname: {
             type: String,
-            required: [true, 'Surname is required'],
+            required: [true, 'validation.surnameRequired'],
             trim: true,
         },
         role: {
@@ -72,14 +72,14 @@ const userSchema = new mongoose.Schema(
                 required: [function () {
                     return this.lessonPlace && this.lessonPlace.includes('onSite');
                 },
-                'Location is required while you can conduct lessons on site']
+                'validation.locationRequiredOnSite']
             },
             address: {
                 type: String,
                 required: [function () {
                     return this.lessonPlace && this.lessonPlace.includes('onSite');
                 },
-                'Location is required while you can conduct lessons on site']
+                'validation.locationRequiredOnSite']
             },
         },
         lessonsPlatform: {
@@ -87,7 +87,7 @@ const userSchema = new mongoose.Schema(
             required: [function (val) {
                 return !val && this.lessonPlace && this.lessonPlace.includes('online')
             },
-            'Platform is required while you can conduct lessons online']
+            'validation.platformRequiredOnline']
         },
         lessonMoneyRate: {
             type: Number,
@@ -202,27 +202,27 @@ userSchema.methods.neededActionsToVerification = function() {
     const neededActions = [];
 
     if (this.schoolLevel.length <= 0) {
-        neededActions.push('School level is needed');
+        neededActions.push('validation.needed_schoolLevel');
     }
 
     if (this.subject.length <= 0 ) {
-        neededActions.push('Subject is needed');
+        neededActions.push('validation.needed_subject');
     }
 
     if (this.lessonPlace.length <= 0) {
-        neededActions.push('Lessons place is needed');
+        neededActions.push('validation.needed_lessonPlace');
     }
 
     if (!this.lessonLength) {
-        neededActions.push('Lesson length is needed');
+        neededActions.push('validation.needed_lessonLength');
     }
 
     if (!this.lessonMoneyRate) {
-        neededActions.push('Lesson money rate is needed');
+        neededActions.push('validation.needed_lessonMoneyRate');
     }
 
     if (Object.keys(this.availableHours).length <= 0) {
-        neededActions.push('Available hours are needed');
+        neededActions.push('validation.needed_availableHours');
     }
 
     return neededActions;

@@ -1,0 +1,87 @@
+{
+  "auth": {
+    "successfullyAuthorized": "Pomyślnie autoryzowany",
+    "loginSuccess": "Login pomyślny",
+    "invalidCredentials": "Błędny email lub hasło",
+    "userNotFound": "Użytkownik nie znaleziony",
+    "registrationSuccess": "Rejestracja pomyślna",
+    "emailAlreadyExists": "Email jest już w użyciu",
+    "notLoggedIn": "Nie jesteś zalogowany! Zaloguj się aby uzyskać dostęp",
+    "userNoLongerExists": "Użytkownik przypisany do tego tokenu już nie istnieje",
+    "passwordChangedRecently": "Użytkownik niedawno zmienił hasło! Zaloguj się ponownie",
+    "currentPasswordIncorrect": "Obecne hasło jest nieprawidłowe",
+    "passwordUpdated": "Hasło zaktualizowane pomyślnie"
+  },
+  "lesson": {
+    "requestCreated": "Żądanie lekcji utworzone pomyślnie",
+    "requestPending": "Żądanie lekcji jest teraz oczekujące",
+    "requestRejected": "Żądanie lekcji zostało odrzucone",
+    "requestAccepted": "Żądanie lekcji zaakceptowane",
+    "requestCancelled": "Żądanie lekcji anulowane",
+    "cannotAcceptAfterDeadline": "Nie można zaakceptować lekcji po terminie",
+    "requestNotFound": "Żądanie lekcji nie znalezione",
+    "linkSet": "Link do lekcji został ustawiony pomyślnie"
+  },
+  "teacher": {
+    "profileUpdated": "Profil nauczyciela zaktualizowany pomyślnie",
+    "hoursAdded": "Godziny dostępności dodane pomyślnie",
+    "notFound": "Nauczyciel nie znaleziony",
+    "lessonNotFound": "Żądanie lekcji nie znalezione",
+    "onlyOnlineLessonCanHaveLink": "Tylko lekcje online mogą mieć link",
+    "noAvailableTime": "Nauczyciel nie udziela lekcji w tym czasie",
+    "timeInPast": "Czas nie może być w przeszłości",
+    "teacherHasOtherLesson": "W tym czasie nauczyciel ma inną lekcję. Wybierz inny termin"
+  },
+  "rating": {
+    "ratingSubmitted": "Ocena dodana pomyślnie",
+    "ratingUpdated": "Ocena zaktualizowana pomyślnie",
+    "alreadyLeftOpinion": "Już wyraziłeś opinię o tym nauczycielu",
+    "notFound": "Ocena nie znaleziona"
+  },
+  "conversation": {
+    "messageCreated": "Wiadomość wysłana pomyślnie",
+    "conversationNotFound": "Konwersacja nie znaleziona",
+    "notBelongToConversation": "Nie należysz do tej konwersacji"
+  },
+  "user": {
+    "dataUpdated": "Użytkownik zaktualizowany",
+    "fileNotFound": "Plik nie znaleziony",
+    "avatarUploaded": "Avatar załadowany pomyślnie"
+  },
+  "validation": {
+    "emailRequired": "Email jest wymagany",
+    "emailIncorrect": "Email jest niepoprawny",
+    "passwordRequired": "Hasło jest wymagane",
+    "passwordsNotSame": "Hasła nie są takie same",
+    "nameRequired": "Imię jest wymagane",
+    "surnameRequired": "Nazwisko jest wymagane",
+    "passwordMinLength": "Hasło musi mieć co najmniej 6 znaków",
+    "passwordConfirmRequired": "Potwierdzenie hasła jest wymagane",
+    "incorrectRole": "Przekazano niepoprawną rolę",
+    "currentPasswordRequired": "Obecne hasło nie może być puste",
+    "newPasswordRequired": "Nowe hasło nie może być puste",
+    "confirmPasswordRequired": "Potwierdzenie hasła nie może być puste",
+    "locationRequiredOnSite": "Lokalizacja jest wymagana jeśli prowadzisz lekcje na miejscu",
+    "platformRequiredOnline": "Platforma jest wymagana jeśli prowadzisz lekcje online",
+    "needed_schoolLevel": "Wymagany poziom szkoły",
+    "needed_subject": "Wymagany przedmiot",
+    "needed_lessonPlace": "Wymagane miejsce lekcji",
+    "needed_lessonLength": "Wymagana długość lekcji",
+    "needed_lessonMoneyRate": "Wymagana stawka za lekcję",
+    "needed_availableHours": "Wymagane dostępne godziny"
+  },
+  "errors": {
+    "serverError": "Wewnętrzny błąd serwera",
+    "somethingWentWrong": "Coś poszło nie tak",
+    "somethingWentWrongExclamation": "Coś poszło nie tak!",
+    "alreadyInUse": "jest już w użyciu",
+    "unauthorized": "Brak dostępu",
+    "notPermitted": "Nie masz uprawnień do wykonania tej czynności",
+    "forbidden": "Dostęp zabroniony",
+    "notFound": "Zasób nie znaleziony",
+    "validationError": "Błąd walidacji",
+    "tokenExpired": "Token wygasł",
+    "invalidToken": "Nieprawidłowy token",
+    "userNotFound": "Użytkownik nie znaleziony"
+  }
+}

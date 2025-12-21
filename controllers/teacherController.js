@@ -5,6 +5,7 @@ const { roles } = require('../enums/userEnums');
 const AppError = require('../utils/appError');
 const { status } = require('../enums/lessonRequestEnums');
 const Rating = require("../models/Rating");
+const { t } = require('../utils/i18n');
 
 const handleListOfParams = value => {
     return typeof value === 'string' ? [value] : Object.values(value || {})
@@ -121,7 +122,7 @@ exports.sendLessonRequest = catchErrorAsync(async (req, res, next) => {
     if (!teacher) {
         return next(
             new AppError('ValidationError', 422, {
-                teacher: 'Teacher not found',
+                teacher: t('teacher.notFound', req.language || 'en'),
             })
         );
     }
@@ -135,7 +136,7 @@ exports.sendLessonRequest = catchErrorAsync(async (req, res, next) => {
     )) {
         return next(
             new AppError('ValidationError', 422, {
-                date: 'Teacher does not give lessons on that time',
+                date: t('teacher.noAvailableTime', req.language || 'en'),
             })
         );
     }
@@ -146,7 +147,7 @@ exports.sendLessonRequest = catchErrorAsync(async (req, res, next) => {
     if (inputDate <= now) {
         return next(
             new AppError('ValidationError', 422, {
-                date: 'Time cannot be in the past',
+                date: t('teacher.timeInPast', req.language || 'en'),
             })
         );
     }
@@ -178,7 +179,7 @@ exports.sendLessonRequest = catchErrorAsync(async (req, res, next) => {
     if (existingRequestInThatTime) {
         return next(
             new AppError('ValidationError', 422, {
-                date: 'In this time teacher has other lesson. Please select other date',
+                date: t('teacher.teacherHasOtherLesson', req.language || 'en'),
             })
         );
     }

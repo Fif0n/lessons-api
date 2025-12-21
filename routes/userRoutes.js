@@ -17,14 +17,15 @@ router
     .put(
         check('email')
             .isEmail()
-            .withMessage('Invalid Email')
-            .withMessage('Email is required')
-            .custom(async value => {
+            .withMessage('validation.emailIncorrect')
+            .notEmpty()
+            .withMessage('validation.emailRequired')
+            .custom(async (value, { req }) => {
                 const existingUser = await User.findOne({
                     email: value,
                     _id: { $ne: req.user.id }
                 });
-                if (existingUser) throw new AppError('Email already in use');
+                if (existingUser) throw new Error('auth.emailAlreadyExists');
             }),
         userController.updateProfileSettings
     )
@@ -34,13 +35,13 @@ router.put(
     '/update-password',
     check('currentPassword')
         .notEmpty()
-        .withMessage('Current password cannot be empty'),
+        .withMessage('validation.currentPasswordRequired'),
     check('password')
         .notEmpty()
-        .withMessage('New password cannot be empty'),
+        .withMessage('validation.newPasswordRequired'),
     check('passwordConfirm')
         .notEmpty()
-        .withMessage('Confirm password cannot be empty'),
+        .withMessage('validation.confirmPasswordRequired'),
     authController.updatePassword
 );
 

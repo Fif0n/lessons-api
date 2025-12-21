@@ -18,6 +18,11 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(express.json({ limit: '10kb' }));
 
+// Middlewware - pobieranie języka
+app.use((req, res, next) => {
+    req.language = req.header('Accept-Language')?.split('-')[0] || 'en';
+    next();
+});
 
 app.use('/api', authRoutes);
 app.use('/api/user', userRoutes);

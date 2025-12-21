@@ -5,8 +5,9 @@ const AppError = require('../utils/appError');
 const { promisify } = require('util');
 const { signJwtToken, saveTokenOptionsToCookies } = require('../auth/tokenManager');
 const jwt = require('jsonwebtoken');
+const { t } = require('../utils/i18n');
 
-const createAndSendToken = (user, status, res) => {
+const createAndSendToken = (user, status, res, language = 'en') => {
     const token = signJwtToken(user);
     saveTokenOptionsToCookies(token, res);
 
@@ -15,7 +16,7 @@ const createAndSendToken = (user, status, res) => {
 
     res.status(status).json({
         status: 'success',
-        message: 'Successfully authorized',
+        message: t('auth.successfullyAuthorized', language),
         token,
         data: { user }
     });
@@ -33,7 +34,7 @@ exports.signup = catchErrorAsync(async (req, res, next) => {
         role
     });
 
-    createAndSendToken(newUser, 201, res);
+    createAndSendToken(newUser, 201, res, req.language || 'en');
 });
 
 exports.login = catchErrorAsync(async (req, res, next) => {
@@ -42,14 +43,14 @@ exports.login = catchErrorAsync(async (req, res, next) => {
     const user = await User.findOne({ email, role }).select('+password');
 
     if (!user || !(await user.isPasswordCorrect(password, user.password))) {
-        const errorMessage = 'Invalid email or password';
+        const errorMessage = t('auth.invalidCredentials', req.language || 'en');
         return next(new AppError('ValidationError', 422, {
             email: errorMessage,
             password: errorMessage
         }));
     }
 
-    createAndSendToken(user, 200, res);
+    createAndSendToken(user, 200, res, req.language || 'en');
 });
 
 exports.protect = catchErrorAsync(async (req, res, next) => {
@@ -64,7 +65,7 @@ exports.protect = catchErrorAsync(async (req, res, next) => {
     if (!token) {
         return next(
             new AppError(
-                'You are not logged in! Please log in to get access',
+                t('auth.notLoggedIn', req.language || 'en'),
                 401,
             ),
         );
@@ -78,7 +79,7 @@ exports.protect = catchErrorAsync(async (req, res, next) => {
     if (!currentUser) {
         return next(
             new AppError(
-                'The user belonging to this token no longer exist.',
+                t('auth.userNoLongerExists', req.language || 'en'),
                 401,
             ),
         );
@@ -88,7 +89,7 @@ exports.protect = catchErrorAsync(async (req, res, next) => {
     if (currentUser.changedPasswordAfter(decoded.iat)) {
         return next(
             new AppError(
-                'User recently changed password! Please log in again.',
+                t('auth.passwordChangedRecently', req.language || 'en'),
                 401,
             ),
         );
@@ -102,7 +103,7 @@ exports.restrictTo = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
             return next(
-                new AppError('You are not permitted to do this action', 403)
+                new AppError(t('errors.notPermitted', req.language || 'en'), 403)
             );
         }
     
@@ -114,12 +115,12 @@ exports.updatePassword = catchErrorAsync(async (req, res, next) => {
     const user = await User.findById(req.user.id).select('+password');
 
     if (!user) {
-        return next(new AppError('User not found', 400));
+        return next(new AppError(t('errors.userNotFound', req.language || 'en'), 400));
     }
 
     if (!await user.isPasswordCorrect(req.body.currentPassword, user.password)) {
         return next(new AppError('ValidationError', 400, { data: {
-            currentPassword: 'Current password is not correct',
+            currentPassword: t('auth.currentPasswordIncorrect', req.language || 'en'),
         }}));
     }
 
@@ -127,5 +128,5 @@ exports.updatePassword = catchErrorAsync(async (req, res, next) => {
     user.passwordConfirm = req.body.passwordConfirm;
     await user.save();
 
-    createAndSendToken(user, 200, res);
-})
+    createAndSendToken(user, 200, res, req.language || 'en');
+});

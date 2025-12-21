@@ -11,35 +11,35 @@ router.post(
     '/signup',
     check('email')
         .isEmail()
-        .withMessage('Invalid Email')
+        .withMessage('validation.emailIncorrect')
         .notEmpty()
-        .withMessage('Email is required')
+        .withMessage('validation.emailRequired')
         .custom(async (value, { req }) => {
             const user = await User.findOne({email: value});
-            if (user) throw new AppError('Email already in use');
+            if (user) throw new Error('auth.emailAlreadyExists');
         })
         .normalizeEmail(),
     check('password')
         .notEmpty()
-        .withMessage('Password is required')
+        .withMessage('validation.passwordRequired')
         .isLength({ min: 6 })
-        .withMessage('Password has to be minimum 6 chars long'),
+        .withMessage('validation.passwordMinLength'),
     check('passwordConfirm')
         .notEmpty()
-        .withMessage('Password confirmation is required')
+        .withMessage('validation.passwordConfirmRequired')
         .custom((value, { req }) => {
             return value === req.body.password
         })
-        .withMessage('Passwords are not the same'),
+        .withMessage('validation.passwordsNotSame'),
     check('name')
         .notEmpty()
-        .withMessage('Name is required'),
+        .withMessage('validation.nameRequired'),
     check('surname')
         .notEmpty()
-        .withMessage('Surname is required'),
+        .withMessage('validation.surnameRequired'),
     check('role')
         .isIn([roles.student, roles.teacher])
-        .withMessage('Passed incorrect role'),
+        .withMessage('validation.incorrectRole'),
     validator,
     authController.signup
 );
@@ -48,13 +48,13 @@ router.post(
     '/login',
     check('email')
         .notEmpty()
-        .withMessage('Email is required'),
+        .withMessage('validation.emailRequired'),
     check('password')
         .notEmpty()
-        .withMessage('Password is required'),
+        .withMessage('validation.passwordRequired'),
     check('role')
         .isIn([roles.student, roles.teacher])
-        .withMessage('Passed incorrect role'),
+        .withMessage('validation.incorrectRole'),
     validator,
     authController.login
 );
