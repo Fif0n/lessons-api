@@ -1,0 +1,87 @@
+{
+  "auth": {
+    "successfullyAuthorized": "Successfully authorized",
+    "loginSuccess": "Login successful",
+    "invalidCredentials": "Invalid email or password",
+    "userNotFound": "User not found",
+    "registrationSuccess": "Registration successful",
+    "emailAlreadyExists": "Email already in use",
+    "notLoggedIn": "You are not logged in! Please log in to get access",
+    "userNoLongerExists": "The user belonging to this token no longer exist",
+    "passwordChangedRecently": "User recently changed password! Please log in again",
+    "currentPasswordIncorrect": "Current password is not correct",
+    "passwordUpdated": "Password updated successfully"
+  },
+  "lesson": {
+    "requestCreated": "Lesson request created successfully",
+    "requestPending": "Lesson request is now pending",
+    "requestRejected": "Lesson request has been rejected",
+    "requestAccepted": "Lesson request accepted",
+    "requestCancelled": "Lesson request cancelled",
+    "cannotAcceptAfterDeadline": "Cannot accept lesson after deadline",
+    "requestNotFound": "Lesson request not found",
+    "linkSet": "Lesson link set successfully"
+  },
+  "teacher": {
+    "profileUpdated": "Teacher profile updated successfully",
+    "hoursAdded": "Available hours added successfully",
+    "notFound": "Teacher not found",
+    "lessonNotFound": "Lesson request not found",
+    "onlyOnlineLessonCanHaveLink": "Only online lessons can have lesson link",
+    "noAvailableTime": "Teacher does not give lessons on that time",
+    "timeInPast": "Time cannot be in the past",
+    "teacherHasOtherLesson": "In this time teacher has other lesson. Please select other date"
+  },
+  "rating": {
+    "ratingSubmitted": "Rating submitted successfully",
+    "ratingUpdated": "Rating updated successfully",
+    "alreadyLeftOpinion": "You already left your opinion on this teacher",
+    "notFound": "Rating not found"
+  },
+  "conversation": {
+    "messageCreated": "Message sent successfully",
+    "conversationNotFound": "Conversation not found",
+    "notBelongToConversation": "You do not belong to this conversation"
+  },
+  "user": {
+    "dataUpdated": "User updated",
+    "fileNotFound": "File not found",
+    "avatarUploaded": "Avatar uploaded successfully"
+  },
+  "validation": {
+    "emailRequired": "Email is required",
+    "emailIncorrect": "Email is incorrect",
+    "passwordRequired": "Password is required",
+    "passwordsNotSame": "Passwords are not the same",
+    "nameRequired": "Name is required",
+    "surnameRequired": "Surname is required",
+    "passwordMinLength": "Password has to be minimum 6 chars long",
+    "passwordConfirmRequired": "Password confirmation is required",
+    "incorrectRole": "Passed incorrect role",
+    "currentPasswordRequired": "Current password cannot be empty",
+    "newPasswordRequired": "New password cannot be empty",
+    "confirmPasswordRequired": "Confirm password cannot be empty",
+    "locationRequiredOnSite": "Location is required while you can conduct lessons on site",
+    "platformRequiredOnline": "Platform is required while you can conduct lessons online",
+    "needed_schoolLevel": "School level is needed",
+    "needed_subject": "Subject is needed",
+    "needed_lessonPlace": "Lessons place is needed",
+    "needed_lessonLength": "Lesson length is needed",
+    "needed_lessonMoneyRate": "Lesson money rate is needed",
+    "needed_availableHours": "Available hours are needed"
+  },
+  "errors": {
+    "serverError": "Internal server error",
+    "somethingWentWrong": "Something went wrong",
+    "somethingWentWrongExclamation": "Something went wrong!",
+    "alreadyInUse": "is already in use",
+    "unauthorized": "Unauthorized access",
+    "notPermitted": "You are not permitted to do this action",
+    "forbidden": "Forbidden",
+    "notFound": "Resource not found",
+    "validationError": "Validation error",
+    "tokenExpired": "Token has expired",
+    "invalidToken": "Invalid token",
+    "userNotFound": "User not found"
+  }
+}

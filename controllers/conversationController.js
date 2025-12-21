@@ -3,6 +3,7 @@ const User = require("../models/User");
 const AppError = require("../utils/appError");
 const catchErrorAsync = require("../utils/catchErrorAsync");
 const LessonRequest = require('../models/LessonRequest');
+const { t } = require('../utils/i18n');
 
 exports.getConversations = catchErrorAsync(async (req, res, next) => {
     const user = await User.findById(req.user.id);
@@ -68,7 +69,7 @@ exports.sendMessage = catchErrorAsync(async (req, res, next) => {
     if (!(conversation.lessonRequest.student._id.equals(user._id) || conversation.lessonRequest.teacher._id.equals(user._id))) {
         return next(
             new AppError(
-                'You do not belong to this conversation',
+                t('conversation.notBelongToConversation', req.language || 'en'),
                 403,
             )
         );

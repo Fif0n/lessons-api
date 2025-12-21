@@ -1,20 +1,23 @@
 const AppError = require('./appError');
+const { t } = require('./i18n');
 
-const handleDuplicateFields = err => {
+const handleDuplicateFields = (err, language = 'en') => {
     const data = {};
     const field = Object.keys(err.errorResponse.keyValue)[0];
 
-    data[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is already in use`;
+    data[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} ${t('errors.alreadyInUse', language)}`;
     const message = 'ValidationError';
 
     return new AppError(message, 400, { data });
 };
 
-const handleValidationError = err => {
+const handleValidationError = (err, language = 'en') => {
     const data = {};
 
     Object.keys(err.errors).forEach((key) => {
-        data[key] = err.errors[key].message;
+        const rawMessage = err.errors[key].message;
+        // Translate if message is a translation key; otherwise return original message
+        data[key] = typeof rawMessage === 'string' ? t(rawMessage, language) : rawMessage;
     });
 
     const message = 'ValidationError';
@@ -22,7 +25,7 @@ const handleValidationError = err => {
     return new AppError(message, 400, { data });
 };
 
-const handleError = (err, res) => {
+const handleError = (err, res, language = 'en') => {
     if (err.isOperational) {
         res.status(err.statusCode).json({
             status: err.status,
@@ -34,7 +37,7 @@ const handleError = (err, res) => {
 
         res.status(500).json({
             status: 'error',
-            message: 'Something went wrong!',
+            message: t('errors.somethingWentWrongExclamation', language),
         });
     }
 }
@@ -50,10 +53,11 @@ module.exports = (err, req, res, next) => {
     err.message = err.message || 'error';
 
     let error = { ...err, message: err.message };
+    const language = req.language || 'en';
 
-    if (err.code === 11000) error = handleDuplicateFields(err);
-    if (err.name === 'ValidationError') error = handleValidationError(err);
+    if (err.code === 11000) error = handleDuplicateFields(err, language);
+    if (err.name === 'ValidationError') error = handleValidationError(err, language);
     if (err.message === 'ValidationError') error = handleInsideValidation(err);
 
-    handleError(error, res);
+    handleError(error, res, language);
 }

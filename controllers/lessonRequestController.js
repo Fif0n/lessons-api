@@ -7,6 +7,7 @@ const Conversation = require('../models/Conversation');
 const AppError = require('../utils/appError');
 const mongoose = require('mongoose');
 const dateHelper = require('../utils/dateHelper');
+const { t } = require('../utils/i18n');
 
 exports.getLessonRequests = catchErrorAsync(async (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
@@ -103,9 +104,9 @@ exports.postLessonRequest = catchErrorAsync(async (req, res, next) => {
         if (lessonRequest.getStartDate() < now) {
             return next(
                 new AppError(
-                    'Cannot accept lesson after deadline',
+                    t('lesson.cannotAcceptAfterDeadline', req.language || 'en'),
                     400,
-                    {data: {date: 'Cannot accept lesson after deadline'}}
+                    {data: {date: t('lesson.cannotAcceptAfterDeadline', req.language || 'en')}}
                 )
             );
         }

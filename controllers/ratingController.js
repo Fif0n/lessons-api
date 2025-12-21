@@ -2,6 +2,7 @@ const User = require("../models/User");
 const catchErrorAsync = require("../utils/catchErrorAsync");
 const Rating = require('../models/Rating');
 const AppError = require("../utils/appError");
+const { t } = require('../utils/i18n');
 
 exports.postRate = catchErrorAsync(async (req, res, next) => {
     const { teacherId, rate, text } = req.body;
@@ -12,7 +13,7 @@ exports.postRate = catchErrorAsync(async (req, res, next) => {
     if (!teacher) {
         return next(
             new AppError(
-                'Teacher not found',
+                t('teacher.notFound', req.language || 'en'),
                 400
             )
         );
@@ -26,7 +27,7 @@ exports.postRate = catchErrorAsync(async (req, res, next) => {
     if (ratingExist) {
         return next(
             new AppError(
-                'You already left your opinion on this teacher',
+                t('rating.alreadyLeftOpinion', req.language || 'en'),
                 400
             )
         );
@@ -58,8 +59,8 @@ exports.updateRate = catchErrorAsync(async (req, res, next) => {
     if (!rating) {
         return next(
             new AppError(
-                404,
-                'Rating not found'
+                t('rating.notFound', req.language || 'en'),
+                404
             )
         );
     }

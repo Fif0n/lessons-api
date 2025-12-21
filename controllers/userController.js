@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const LessonRequest = require('../models/LessonRequest');
 const mongoose = require('mongoose');
+const { t } = require('../utils/i18n');
 
 const teacherScenarios = {
     updateBasicData: ['name', 'surname', 'email', 'phoneNumber', 'yourselfDescription', 'profileImage'],
@@ -61,7 +62,7 @@ exports.getUserData = catchErrorAsync(async (req, res, next) => {
 
     res.status(200).json({
         status: 'success',
-        message: 'User updated',
+        message: t('user.dataUpdated', req.language || 'en'),
         data: { user },
     });
 });
@@ -97,7 +98,7 @@ exports.updateLessonsSettings = catchErrorAsync(async (req, res, next) => {
     const scenarios = req.user.role == roles.student ? studentScenarios : teacherScenarios;
 
     if (scenarios[scenario] == undefined) {
-        return next(new AppError('Something went wrong', 400));
+        return next(new AppError(t('errors.somethingWentWrong', req.language || 'en'), 400));
     }
 
     filteredBody = filterObj(body, scenarios[scenario]);
@@ -137,7 +138,7 @@ exports.updateAvailableHours = catchErrorAsync(async (req, res, next) => {
     const scenarios = req.user.role == roles.student ? studentScenarios : teacherScenarios;
 
     if (scenarios[scenario] == undefined) {
-        return next(new AppError('Something went wrong', 400));
+        return next(new AppError(t('errors.somethingWentWrong', req.language || 'en'), 400));
     }
 
     filteredBody = filterObj(req.body, scenarios[scenario]);
@@ -178,7 +179,8 @@ exports.getProfileData = catchErrorAsync(async (req, res, next) => {
 exports.uploadUserAvatar = catchErrorAsync(async (req, res, next) => {
     if (!req.file) {
         return res.status(400).json({
-            status: 'File not found',
+            status: 'error',
+            message: t('user.fileNotFound', req.language || 'en'),
         });
     }
 
