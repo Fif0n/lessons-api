@@ -1,25 +1,25 @@
 const roles = {
-    student: 'student',
-    teacher: 'teacher'
+    student: 'enums.roles.student',
+    teacher: 'enums.roles.teacher'
 };
 
 const subjects = {
-    math: 'Math',
-    physics: 'Physics',
-    chemistry: 'Chemistry',
-    it: 'IT',
-    biology: 'Biology'
+    math: 'enums.subjects.math',
+    physics: 'enums.subjects.physics',
+    chemistry: 'enums.subjects.chemistry',
+    it: 'enums.subjects.it',
+    biology: 'enums.subjects.biology'
 };
 
 const schoolLevels = {
-    primarySchool: 'Primary school',
-    highSchool: 'High school',
-    university: 'University'
+    primarySchool: 'enums.schoolLevels.primarySchool',
+    highSchool: 'enums.schoolLevels.highSchool',
+    university: 'enums.schoolLevels.university'
 };
 
 const lessonPlaces = {
-    online: 'Online',
-    onSite: 'On site'
+    online: 'enums.lessonPlaces.online',
+    onSite: 'enums.lessonPlaces.onSite'
 };
 
 module.exports = {roles, subjects, schoolLevels, lessonPlaces};

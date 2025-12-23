@@ -8,6 +8,7 @@ const AppError = require('../utils/appError');
 const mongoose = require('mongoose');
 const dateHelper = require('../utils/dateHelper');
 const { t } = require('../utils/i18n');
+const { translateEnumValue, translateEnumObject } = require('../utils/enumHelper');
 
 exports.getLessonRequests = catchErrorAsync(async (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
@@ -33,12 +34,14 @@ exports.getLessonRequests = catchErrorAsync(async (req, res, next) => {
         .limit(perPage);
 
     let ordinalNumber = 0;
+    const language = req.language || 'en';
     const response = lessonRequest.map(request => {
         ordinalNumber++;
         request.ordinalNumber = ordinalNumber;
-        request.subject = subjects[request.subject];
-        request.schoolLevel = schoolLevels[request.schoolLevel];
-        request.lessonPlace = lessonPlaces[request.lessonPlace];
+        request.subject = translateEnumValue(subjects, request.subject, language);
+        request.schoolLevel = translateEnumValue(schoolLevels, request.schoolLevel, language);
+        request.lessonPlace = translateEnumValue(lessonPlaces, request.lessonPlace, language);
+        request.status = translateEnumValue(status, request.status, language);
 
         return request;
     });
@@ -47,10 +50,12 @@ exports.getLessonRequests = catchErrorAsync(async (req, res, next) => {
 });
 
 exports.getLessonRequestStatuses = (req, res, next) => {
+    const language = req.language || 'en';
+
     res.status(200).json({
         status: 'success',
         data: {
-            status
+            status: translateEnumObject(status, language)
         }
     });
 };
@@ -58,6 +63,7 @@ exports.getLessonRequestStatuses = (req, res, next) => {
 exports.getLessonRequest = catchErrorAsync(async (req, res, next) => {
     const id = req.params.id;
     const user = await User.findById(req.user.id);
+    const language = req.language || 'en';
 
     const lessonRequest = await LessonRequest.findOne({
         $or: [
@@ -67,10 +73,10 @@ exports.getLessonRequest = catchErrorAsync(async (req, res, next) => {
         _id: id
     });
 
-    lessonRequest.subject = subjects[lessonRequest.subject];
-    lessonRequest.schoolLevel = schoolLevels[lessonRequest.schoolLevel];
-    lessonRequest.lessonPlace = lessonPlaces[lessonRequest.lessonPlace];
-    lessonRequest.status = status[lessonRequest.status];
+    lessonRequest.subject = translateEnumValue(subjects, lessonRequest.subject, language);
+    lessonRequest.schoolLevel = translateEnumValue(schoolLevels, lessonRequest.schoolLevel, language);
+    lessonRequest.lessonPlace = translateEnumValue(lessonPlaces, lessonRequest.lessonPlace, language);
+    lessonRequest.status = translateEnumValue(status, lessonRequest.status, language);
 
     res.status(200).json({
         status: 'success',
@@ -210,6 +216,7 @@ exports.setLessonLink = catchErrorAsync(async (req, res, next) => {
 exports.getIncomingLessons = catchErrorAsync(async (req, res, next) => {
     const year = parseInt(req.params.year);
     const week = parseInt(req.params.week);
+    const language = req.language || 'en';
 
     const userId = new mongoose.Types.ObjectId(req.user.id);
 
@@ -238,46 +245,6 @@ exports.getIncomingLessons = catchErrorAsync(async (req, res, next) => {
             $dateToString: {
                 format: "%Y-%m-%d",
                 date: "$date"
-            }
-          }
-        }
-      },
-      {
-        $addFields: {
-          subject: {
-            $switch: {
-              branches: Object.keys(subjects).map(key => ({
-                case: { $eq: ["$subject", key] },
-                then: subjects[key]
-              })),
-              default: "$subject"
-            }
-          },
-          lessonPlace: {
-            $switch: {
-                branches: Object.keys(lessonPlaces).map(key => ({
-                    case: { $eq: ["$lessonPlace", key] },
-                    then: lessonPlaces[key]
-                })),
-                default: "$lessonPlace"
-            }
-          },
-          schoolLevel: {
-            $switch: {
-                branches: Object.keys(schoolLevels).map(key => ({
-                    case: { $eq: ["$schoolLevel", key] },
-                    then: schoolLevels[key]
-                })),
-                default: "$schoolLevel"
-            }
-          },
-          status: {
-            $switch: {
-                branches: Object.keys(status).map(key => ({
-                    case: { $eq: ["$status", key] },
-                    then: status[key]
-                })),
-                default: "$status"
             }
           }
         }
@@ -339,7 +306,18 @@ exports.getIncomingLessons = catchErrorAsync(async (req, res, next) => {
       }
     ]);
 
-    res.status(200).json(result);
+    const translatedResult = result.map(group => ({
+      ...group,
+      requests: group.requests.map(request => ({
+        ...request,
+        subject: translateEnumValue(subjects, request.subject, language),
+        schoolLevel: translateEnumValue(schoolLevels, request.schoolLevel, language),
+        lessonPlace: translateEnumValue(lessonPlaces, request.lessonPlace, language),
+        status: translateEnumValue(status, request.status, language)
+      }))
+    }));
+
+    res.status(200).json(translatedResult);
 });
 
 exports.getLessonsHistory = catchErrorAsync(async (req, res, next) => {
@@ -468,10 +446,12 @@ exports.getLessonsHistory = catchErrorAsync(async (req, res, next) => {
 });
 
 exports.getLessonsHistoryEnums = (req, res, next) => {
+  const language = req.language || 'en';
+
   res.status(200).json({
     status: 'success',
     data: {
-      subjects
+      subjects: translateEnumObject(subjects, language)
     }
   });
 };

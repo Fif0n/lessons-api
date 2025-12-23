@@ -140,11 +140,11 @@ const userSchema = new mongoose.Schema(
 userSchema.pre('save', async function (next) {
     // Nie potrzebujemy tego w bazie
     this.passwordConfirm = undefined;
-    if (this.role == roles.student) {
+    if (this.role == 'student') {
         this.verified = true;
     }
 
-    if (this.role == roles.teacher) {
+    if (this.role == 'teacher') {
         if (
             this.schoolLevel.length > 0 &&
             this.subject.length > 0 &&

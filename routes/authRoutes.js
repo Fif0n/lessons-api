@@ -38,7 +38,7 @@ router.post(
         .notEmpty()
         .withMessage('validation.surnameRequired'),
     check('role')
-        .isIn([roles.student, roles.teacher])
+        .isIn(['student', 'teacher'])
         .withMessage('validation.incorrectRole'),
     validator,
     authController.signup
@@ -53,7 +53,7 @@ router.post(
         .notEmpty()
         .withMessage('validation.passwordRequired'),
     check('role')
-        .isIn([roles.student, roles.teacher])
+        .isIn(['student', 'teacher'])
         .withMessage('validation.incorrectRole'),
     validator,
     authController.login

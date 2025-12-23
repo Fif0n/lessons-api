@@ -83,5 +83,32 @@
     "tokenExpired": "Token wygasł",
     "invalidToken": "Nieprawidłowy token",
     "userNotFound": "Użytkownik nie znaleziony"
+  },
+  "enums": {
+    "roles": {
+      "student": "Uczeń",
+      "teacher": "Nauczyciel"
+    },
+    "subjects": {
+      "math": "Matematyka",
+      "physics": "Fizyka",
+      "chemistry": "Chemia",
+      "it": "Informatyka",
+      "biology": "Biologia"
+    },
+    "schoolLevels": {
+      "primarySchool": "Szkoła podstawowa",
+      "highSchool": "Liceum",
+      "university": "Uniwersytet"
+    },
+    "lessonPlaces": {
+      "online": "Online",
+      "onSite": "Na miejscu"
+    },
+    "lessonRequestStatus": {
+      "rejected": "Odrzucone",
+      "pending": "Oczekujące",
+      "accepted": "Zaakceptowane"
+    }
   }
 }
