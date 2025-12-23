@@ -32,7 +32,7 @@ router.route('/lesson-request/:id')
 
 router.route('/set-lesson-link/:id')
     .put(
-        authController.restrictTo(roles.teacher),
+        authController.restrictTo('teacher'),
         lessonRequestController.setLessonLink
     );
 

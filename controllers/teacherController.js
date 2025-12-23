@@ -22,7 +22,7 @@ exports.getTeacherList = catchErrorAsync(async (req, res, next) => {
     const schoolLevel = handleListOfParams(req.query.school_level);
     const lessonPlace = handleListOfParams(req.query.lesson_place);
 
-    let query = { verified: true, role: roles.teacher };
+    let query = { verified: true, role: 'teacher' };
 
     if (subject.length > 0) query.subject = { $in: subject };
     if (schoolLevel.length > 0) query.schoolLevel = { $in: schoolLevel };
@@ -70,7 +70,7 @@ exports.getTeacherList = catchErrorAsync(async (req, res, next) => {
 });
 
 exports.getTeacherData = catchErrorAsync(async (req, res, next) => {
-    const user = await User.findOne({ _id: req.params.id, role: roles.teacher });
+    const user = await User.findOne({ _id: req.params.id, role: 'teacher' });
 
     user.avatar = user.getBase64Avatar();
 
@@ -107,7 +107,12 @@ exports.getTeacherData = catchErrorAsync(async (req, res, next) => {
     res.status(200).json({
         status: 'success',
         data: {
-            user,
+            user: {
+                ...user.toObject(),
+                subjectsTranslated: user.subject.map(subj => t(`enums.subjects.${subj}`, req.language || 'en')),
+                schoolLevelsTranslated: user.schoolLevel.map(level => t(`enums.schoolLevels.${level}`, req.language || 'en')),
+                lessonPlacesTranslated: user.lessonPlace.map(place => t(`enums.lessonPlaces.${place}`, req.language || 'en'))
+            },
             canLeaveComment: hadLessonBefore ? true : false,
             rate
         }

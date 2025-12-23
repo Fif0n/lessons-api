@@ -8,6 +8,7 @@ const path = require('path');
 const LessonRequest = require('../models/LessonRequest');
 const mongoose = require('mongoose');
 const { t } = require('../utils/i18n');
+const { translateEnumObject } = require('../utils/enumHelper');
 
 const teacherScenarios = {
     updateBasicData: ['name', 'surname', 'email', 'phoneNumber', 'yourselfDescription', 'profileImage'],
@@ -69,15 +70,16 @@ exports.getUserData = catchErrorAsync(async (req, res, next) => {
 
 exports.getLessonsSettings = catchErrorAsync(async (req, res, next) => {
     const user = await User.findById(req.user.id);
+    const language = req.language || 'en';
 
     res.status(200).json({
         status: 'success',
         data: {
             user,
             enums: {
-                subjects,
-                schoolLevels,
-                lessonPlaces
+                subjects: translateEnumObject(subjects, language),
+                schoolLevels: translateEnumObject(schoolLevels, language),
+                lessonPlaces: translateEnumObject(lessonPlaces, language)
             }
         }
     });
@@ -216,7 +218,7 @@ exports.deleteHoursRange = catchErrorAsync(async (req, res, next) => {
 
 });
 
-exports.getEsitimatedIncome = catchErrorAsync(async (req, res, next) => {
+exports.getEstimatedIncome = catchErrorAsync(async (req, res, next) => {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);

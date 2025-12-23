@@ -83,5 +83,32 @@
     "tokenExpired": "Token has expired",
     "invalidToken": "Invalid token",
     "userNotFound": "User not found"
+  },
+  "enums": {
+    "roles": {
+      "student": "Student",
+      "teacher": "Teacher"
+    },
+    "subjects": {
+      "math": "Math",
+      "physics": "Physics",
+      "chemistry": "Chemistry",
+      "it": "IT",
+      "biology": "Biology"
+    },
+    "schoolLevels": {
+      "primarySchool": "Primary school",
+      "highSchool": "High school",
+      "university": "University"
+    },
+    "lessonPlaces": {
+      "online": "Online",
+      "onSite": "On site"
+    },
+    "lessonRequestStatus": {
+      "rejected": "Rejected",
+      "pending": "Pending",
+      "accepted": "Accepted"
+    }
   }
 }

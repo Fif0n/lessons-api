@@ -9,25 +9,25 @@ router.use(authController.protect);
 
 router.route('/teachers')
     .get(
-        authController.restrictTo(roles.student),
+        authController.restrictTo('student'),
         teacherController.getTeacherList
     );
 
 router.route('/teacher/:id')
     .get(
-        authController.restrictTo(roles.student),
+        authController.restrictTo('student'),
         teacherController.getTeacherData,
     );
 
 router.route('/available-lesson-requests-hours/:id/:date')
     .get(
-        authController.restrictTo(roles.student),
+        authController.restrictTo('student'),
         teacherController.getActiveRequests,
     );
 
 router.route('/lesson-request/:id')
     .post(
-        authController.restrictTo(roles.student),
+        authController.restrictTo('student'),
         teacherController.sendLessonRequest,
     );
 

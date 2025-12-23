@@ -51,7 +51,7 @@ router
         userController.getLessonsSettings
     )
     .put(
-        authController.restrictTo(roles.teacher),
+        authController.restrictTo('teacher'),
         userController.updateLessonsSettings
     );
 
@@ -59,15 +59,15 @@ router
 router
     .route('/available-hours')
     .put(
-        authController.restrictTo(roles.teacher),
+        authController.restrictTo('teacher'),
         userController.updateAvailableHours
     )
     .get(
-        authController.restrictTo(roles.teacher),
+        authController.restrictTo('teacher'),
         userController.getAvailableHours
     );
 
-router.get('/profile-data', authController.restrictTo(roles.teacher), userController.getProfileData);
+router.get('/profile-data', authController.restrictTo('teacher'), userController.getProfileData);
 
 const storage = multer.diskStorage({
     destination: 'uploads/',
@@ -84,14 +84,14 @@ router.get('/get-avatar', userController.getUserAvatar);
 
 router.route('/opinions-about-me')
     .get(
-        authController.restrictTo(roles.teacher),
+        authController.restrictTo('teacher'),
         teacherController.getTeacherRatings
     );
 
 router.route('/estimated-income')
     .get(
-        authController.restrictTo(roles.teacher),
-        userController.getEsitimatedIncome,
+        authController.restrictTo('teacher'),
+        userController.getEstimatedIncome,
     );
 
 module.exports = router;

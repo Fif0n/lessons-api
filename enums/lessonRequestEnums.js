@@ -1,7 +1,7 @@
 const status = {
-    rejected: 'Rejected',
-    pending: 'Pending',
-    accepted: 'Accepted',
+    rejected: 'enums.lessonRequestStatus.rejected',
+    pending: 'enums.lessonRequestStatus.pending',
+    accepted: 'enums.lessonRequestStatus.accepted',
 };
 
 module.exports = { status };
