@@ -7,21 +7,21 @@ const ratingSchema = mongoose.Schema(
         student: {
             type: mongoose.Schema.ObjectId,
             ref: 'User',
-            required: [true, 'Student is required']
+            required: [true, 'validation.rating.studentRequired']
         },
         teacher: {
             type: mongoose.Schema.ObjectId,
             ref: 'User',
-            required: [true, 'Teacher is required']
+            required: [true, 'validation.rating.teacherRequired']
         },
         text: {
             type: String,
         },
         rate: {
             type: Number,
-            min: [1, 'Min rating is 1.0'],
-            max: [5, 'Max rating is 5.0'],
-            required: [true, 'U have to provide rating'],
+            min: [1, 'validation.rating.minRating'],
+            max: [5, 'validation.rating.maxRating'],
+            required: [true, 'validation.rating.rateRequired'],
 
         },
         timestamp: {

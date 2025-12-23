@@ -8,28 +8,28 @@ const lessonRequestSchema = mongoose.Schema(
         student: {
             type: mongoose.Schema.ObjectId,
             ref: 'User',
-            required: [true, 'Student is required'],
+            required: [true, 'validation.lessonRequest.studentRequired'],
         },
         teacher: {
             type: mongoose.Schema.ObjectId,
             ref: 'User',
-            required: [true, 'Teacher is required'],
+            required: [true, 'validation.lessonRequest.teacherRequired'],
         },
         date: {
             type: Date,
-            required: [true, 'Date is required'],
+            required: [true, 'validation.lessonRequest.dateRequired'],
         },
         hours: {
             startingHour: {
                 hour: {
                     type: Number,
-                    required: [true, 'Starting hour is required'],
+                    required: [true, 'validation.lessonRequest.startingHourRequired'],
                     mix: 1,
                     max: 24,
                 },
                 minute: {
                     type: Number,
-                    required: [true, 'Starting hour is required'],
+                    required: [true, 'validation.lessonRequest.startingHourRequired'],
                     mix: 0,
                     max: 60,
                 }
@@ -37,13 +37,13 @@ const lessonRequestSchema = mongoose.Schema(
             endingHour: {
                 hour: {
                     type: Number,
-                    required: [true, 'Ending hour is required'],
+                    required: [true, 'validation.lessonRequest.endingHourRequired'],
                     mix: 1,
                     max: 23,
                 },
                 minute: {
                     type: Number,
-                    required: [true, 'Ending hour is required'],
+                    required: [true, 'validation.lessonRequest.endingHourRequired'],
                     mix: 0,
                     max: 59,
                 }
@@ -52,7 +52,7 @@ const lessonRequestSchema = mongoose.Schema(
         comment: String,
         moneyRate: {
             type: Number,
-            required: [true, 'Lesson cost is required']
+            required: [true, 'validation.lessonRequest.lessonCostRequired']
         },
         status: {
             type: String,
@@ -62,17 +62,17 @@ const lessonRequestSchema = mongoose.Schema(
         subject: {
             type: String,
             enum: Object.keys(subjects),
-            required: [true, 'Subject is required']
+            required: [true, 'validation.lessonRequest.subjectRequired']
         },
         schoolLevel: {
             type: String,
             enum: Object.keys(schoolLevels),
-            required: [true, 'School level is required']
+            required: [true, 'validation.lessonRequest.schoolLevelRequired']
         },
         lessonPlace: {
             type: String,
             enum: Object.keys(lessonPlaces),
-            required: [true, 'Lesson place is required']
+            required: [true, 'validation.lessonRequest.lessonPlaceRequired']
         },
         onlineLessonLink: String,
         idSearch: String,

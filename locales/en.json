@@ -68,7 +68,37 @@
     "needed_lessonPlace": "Lessons place is needed",
     "needed_lessonLength": "Lesson length is needed",
     "needed_lessonMoneyRate": "Lesson money rate is needed",
-    "needed_availableHours": "Available hours are needed"
+    "needed_availableHours": "Available hours are needed",
+    "availableHours": {
+      "hourRequired": "Hour is required",
+      "minuteRequired": "Minute is required",
+      "startingHourRequired": "Starting hour is required",
+      "endingHourRequired": "Ending hour is required",
+      "startingHourCannotBeGreater": "Starting hour cannot be greater than or equal to ending hour"
+    },
+    "lessonRequest": {
+      "studentRequired": "Student is required",
+      "teacherRequired": "Teacher is required",
+      "dateRequired": "Date is required",
+      "startingHourRequired": "Starting hour is required",
+      "endingHourRequired": "Ending hour is required",
+      "lessonCostRequired": "Lesson cost is required",
+      "subjectRequired": "Subject is required",
+      "schoolLevelRequired": "School level is required",
+      "lessonPlaceRequired": "Lesson place is required"
+    },
+    "conversation": {
+      "lessonRequestRequired": "Lesson request is required",
+      "userRequired": "User is required",
+      "messageRequired": "Message is required"
+    },
+    "rating": {
+      "studentRequired": "Student is required",
+      "teacherRequired": "Teacher is required",
+      "minRating": "Minimum rating is 1.0",
+      "maxRating": "Maximum rating is 5.0",
+      "rateRequired": "You have to provide a rating"
+    }
   },
   "errors": {
     "serverError": "Internal server error",

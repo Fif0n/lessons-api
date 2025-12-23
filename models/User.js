@@ -5,6 +5,7 @@ const { roles, subjects, schoolLevels, lessonPlaces } = require('../enums/userEn
 const AvailableHoursSchemas = require('./AvailableHoursSchemas');
 const path = require('path');
 const fs = require('fs');
+const { t } = require('../utils/i18n');
 
 const userSchema = new mongoose.Schema(
     {
@@ -198,31 +199,31 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
     return false;
 };
 
-userSchema.methods.neededActionsToVerification = function() {
+userSchema.methods.neededActionsToVerification = function(language) {
     const neededActions = [];
 
     if (this.schoolLevel.length <= 0) {
-        neededActions.push('validation.needed_schoolLevel');
+        neededActions.push(t('validation.needed_schoolLevel', language));
     }
 
     if (this.subject.length <= 0 ) {
-        neededActions.push('validation.needed_subject');
+        neededActions.push(t('validation.needed_subject', language));
     }
 
     if (this.lessonPlace.length <= 0) {
-        neededActions.push('validation.needed_lessonPlace');
+        neededActions.push(t('validation.needed_lessonPlace', language));
     }
 
     if (!this.lessonLength) {
-        neededActions.push('validation.needed_lessonLength');
+        neededActions.push(t('validation.needed_lessonLength', language));
     }
 
     if (!this.lessonMoneyRate) {
-        neededActions.push('validation.needed_lessonMoneyRate');
+        neededActions.push(t('validation.needed_lessonMoneyRate', language));
     }
 
-    if (Object.keys(this.availableHours).length <= 0) {
-        neededActions.push('validation.needed_availableHours');
+    if (Object.keys(this.availableHours || {}).length <= 0) {
+        neededActions.push(t('validation.needed_availableHours', language));
     }
 
     return neededActions;
