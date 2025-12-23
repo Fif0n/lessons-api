@@ -5,24 +5,24 @@ const hourSchema = new mongoose.Schema({
         type: Number,
         min: 0,
         max: 23,
-        required: [true, 'Hour is required']
+        required: [true, 'validation.availableHours.hourRequired']
     },
     minute: {
         type: Number,
         min: 0,
         max: 59,
-        required: [true, 'Minute is required']
+        required: [true, 'validation.availableHours.minuteRequired']
     }
 });
 
 const timeRangeSchema = new mongoose.Schema({
     hourFrom: {
         type: hourSchema,
-        required: [true, 'Starting hour is required']
+        required: [true, 'validation.availableHours.startingHourRequired']
     },
     hourTo: {
         type: hourSchema,
-        required: [true, 'Ending hour is required'],
+        required: [true, 'validation.availableHours.endingHourRequired'],
         validate: {
             validator: function (value) {
                 const { hourFrom } = this;
@@ -30,7 +30,7 @@ const timeRangeSchema = new mongoose.Schema({
                 const toMinutes = value.hour * 60 + value.minute;
                 return fromMinutes < toMinutes;
             },
-            message: 'Starting cannot be lower than ending'
+            message: 'validation.availableHours.startingHourCannotBeGreater'
         }
     }
 });

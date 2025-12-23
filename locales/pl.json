@@ -68,7 +68,37 @@
     "needed_lessonPlace": "Wymagane miejsce lekcji",
     "needed_lessonLength": "Wymagana długość lekcji",
     "needed_lessonMoneyRate": "Wymagana stawka za lekcję",
-    "needed_availableHours": "Wymagane dostępne godziny"
+    "needed_availableHours": "Wymagane dostępne godziny",
+    "availableHours": {
+      "hourRequired": "Godzina jest wymagana",
+      "minuteRequired": "Minuta jest wymagana",
+      "startingHourRequired": "Godzina początkowa jest wymagana",
+      "endingHourRequired": "Godzina końcowa jest wymagana",
+      "startingHourCannotBeGreater": "Godzina początkowa nie może być większa lub równa godzinie końcowej"
+    },
+    "lessonRequest": {
+      "studentRequired": "Uczeń jest wymagany",
+      "teacherRequired": "Nauczyciel jest wymagany",
+      "dateRequired": "Data jest wymagana",
+      "startingHourRequired": "Godzina początkowa jest wymagana",
+      "endingHourRequired": "Godzina końcowa jest wymagana",
+      "lessonCostRequired": "Koszt lekcji jest wymagany",
+      "subjectRequired": "Przedmiot jest wymagany",
+      "schoolLevelRequired": "Poziom szkoły jest wymagany",
+      "lessonPlaceRequired": "Miejsce lekcji jest wymagane"
+    },
+    "conversation": {
+      "lessonRequestRequired": "Żądanie lekcji jest wymagane",
+      "userRequired": "Użytkownik jest wymagany",
+      "messageRequired": "Wiadomość jest wymagana"
+    },
+    "rating": {
+      "studentRequired": "Uczeń jest wymagany",
+      "teacherRequired": "Nauczyciel jest wymagany",
+      "minRating": "Minimalna ocena to 1.0",
+      "maxRating": "Maksymalna ocena to 5.0",
+      "rateRequired": "Musisz podać ocenę"
+    }
   },
   "errors": {
     "serverError": "Wewnętrzny błąd serwera",

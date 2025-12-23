@@ -6,18 +6,18 @@ const conversationSchema = mongoose.Schema(
         lessonRequest: {
             type: mongoose.Schema.ObjectId,
             ref: 'LessonRequest',
-            required: [true, 'Lesson request is required']
+            required: [true, 'validation.conversation.lessonRequestRequired']
         },
         messages: [
             {
                 user: {
                     type: mongoose.Schema.ObjectId,
                     ref: 'User',
-                    required: [true, 'User is required'],
+                    required: [true, 'validation.conversation.userRequired'],
                 },
                 messageText: {
                     type: String,
-                    required: [true, 'Message is required']
+                    required: [true, 'validation.conversation.messageRequired']
                 },
                 timestamp: {
                     type: String,
