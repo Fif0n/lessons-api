@@ -167,8 +167,8 @@ exports.getAvailableHours = catchErrorAsync(async (req, res, next) => {
 
 exports.getProfileData = catchErrorAsync(async (req, res, next) => {
     const user = await User.findById(req.user.id);
-
-    const neededActions = user.neededActionsToVerification();
+    const language = req.language || 'en';
+    const neededActions = user.neededActionsToVerification(language);
 
     res.status(200).json({
         status: 'success',
