@@ -144,7 +144,7 @@ userSchema.pre('save', async function (next) {
     if (this.role == 'student') {
         this.verified = true;
     }
-
+    console.log(this.availableHours);
     if (this.role == 'teacher') {
         if (
             this.schoolLevel.length > 0 &&
@@ -152,7 +152,7 @@ userSchema.pre('save', async function (next) {
             this.lessonPlace.length > 0 &&
             this.lessonLength &&
             this.lessonMoneyRate &&
-            Object.keys(this.availableHours).length > 0
+            Object.keys(this.availableHours || {}).length > 0
         ) {
             this.verified = true;
         } else {
@@ -244,8 +244,9 @@ userSchema.methods.getBase64Avatar = function() {
 }
 
 userSchema.methods.isTeacherHaveAvailableLessons = function (startingHour, startingMinute, endingHour, endingMinute, date) {
-    const dayName = (new Date(date)).toLocaleDateString('en-US', { weekday: 'long' });
-    const teacherAvailableHours = this.availableHours.dayOfWeek.find(el => el.dayName == dayName);
+    const dayOfWeek = (new Date(date)).getDay();
+    const dayNumber = dayOfWeek === 0 ? 7 : dayOfWeek;
+    const teacherAvailableHours = this.availableHours.dayOfWeek.find(el => el.dayNumber == dayNumber);
 
     if (teacherAvailableHours.hours.length == 0) {
         return false;
