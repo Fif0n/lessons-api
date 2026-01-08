@@ -76,7 +76,6 @@ exports.getLessonRequest = catchErrorAsync(async (req, res, next) => {
     lessonRequest.subject = translateEnumValue(subjects, lessonRequest.subject, language);
     lessonRequest.schoolLevel = translateEnumValue(schoolLevels, lessonRequest.schoolLevel, language);
     lessonRequest.lessonPlace = translateEnumValue(lessonPlaces, lessonRequest.lessonPlace, language);
-    lessonRequest.status = translateEnumValue(status, lessonRequest.status, language);
 
     res.status(200).json({
         status: 'success',
