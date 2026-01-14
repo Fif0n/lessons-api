@@ -83,6 +83,7 @@ exports.getLessonRequest = catchErrorAsync(async (req, res, next) => {
             lessonRequest: {
                 ...lessonRequest.toObject(),
                 statusName: translateEnumValue(status, lessonRequest.status, language),
+                lessonPlaceName: translateEnumValue(lessonPlaces, lessonRequest.lessonPlace, language),
             },
         }
     });
