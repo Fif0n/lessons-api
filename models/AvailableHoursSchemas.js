@@ -36,14 +36,15 @@ const timeRangeSchema = new mongoose.Schema({
 });
 
 const daySchema = new mongoose.Schema({
-    dayName: {
-        type: String,
+    dayNumber: {
+        type: Number,
+        min: 1,
+        max: 7,
         required: true
     },
     hours: {
         type: [timeRangeSchema],
     },
-    
 });
 
 const dayOfWeekSchema = new mongoose.Schema({

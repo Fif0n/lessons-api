@@ -75,13 +75,15 @@ exports.getLessonRequest = catchErrorAsync(async (req, res, next) => {
 
     lessonRequest.subject = translateEnumValue(subjects, lessonRequest.subject, language);
     lessonRequest.schoolLevel = translateEnumValue(schoolLevels, lessonRequest.schoolLevel, language);
-    lessonRequest.lessonPlace = translateEnumValue(lessonPlaces, lessonRequest.lessonPlace, language);
-    lessonRequest.status = translateEnumValue(status, lessonRequest.status, language);
 
     res.status(200).json({
         status: 'success',
         data: {
-            lessonRequest
+            lessonRequest: {
+                ...lessonRequest.toObject(),
+                statusName: translateEnumValue(status, lessonRequest.status, language),
+                lessonPlaceName: translateEnumValue(lessonPlaces, lessonRequest.lessonPlace, language),
+            },
         }
     });
 });
@@ -157,12 +159,14 @@ exports.postLessonRequest = catchErrorAsync(async (req, res, next) => {
 
     await lessonRequest.save();
 
-    lessonRequest.subject = subjects[lessonRequest.subject];
-    lessonRequest.schoolLevel = schoolLevels[lessonRequest.schoolLevel];
-    lessonRequest.lessonPlace = lessonPlaces[lessonRequest.lessonPlace];
-    lessonRequest.status = status[lessonRequest.status];
+    lessonRequest.subject = translateEnumValue(subjects, lessonRequest.subject, req.language);
+    lessonRequest.schoolLevel = translateEnumValue(schoolLevels, lessonRequest.schoolLevel, req.language);
 
-    returnData.lessonRequest = lessonRequest;
+    returnData.lessonRequest = {
+        ...lessonRequest.toObject(),
+        statusName: translateEnumValue(status, lessonRequest.status, req.language),
+        lessonPlaceName: translateEnumValue(lessonPlaces, lessonRequest.lessonPlace, req.language),
+    },
 
     res.status(200).json({
         status: 'success',
@@ -442,7 +446,12 @@ exports.getLessonsHistory = catchErrorAsync(async (req, res, next) => {
 
   const lessons = await LessonRequest.aggregate(pipeline);
 
-  res.status(200).json(lessons);
+  const translatedLessons = lessons.map(lesson => ({
+    ...lesson,
+    subject: lesson.subject ? t(lesson.subject, req.language) : lesson.subject
+  }));
+
+  res.status(200).json(translatedLessons);
 });
 
 exports.getLessonsHistoryEnums = (req, res, next) => {

@@ -206,7 +206,10 @@ exports.uploadUserAvatar = catchErrorAsync(async (req, res, next) => {
 
 exports.getUserAvatar = catchErrorAsync(async (req, res, next) => {
     const user = await User.findById(req.user.id);
-
+    if (!user.avatar) {
+        return next(new AppError(t('user.avatarNotFound', req.language || 'en'), 404));
+    }
+  
     const imagePath = path.join(__dirname, '../uploads', user.avatar);
 
     res.setHeader('Content-Type', 'image/jpeg');
